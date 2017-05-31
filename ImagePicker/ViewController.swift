@@ -53,12 +53,10 @@ UINavigationControllerDelegate, UITextFieldDelegate {
         socialBtn.isEnabled = false
         txtTop.text = "Top"
         txtBottom.text = "Bottom"
-        txtTop.textAlignment = NSTextAlignment.center
-        txtBottom.textAlignment = NSTextAlignment.center
         txtTop.defaultTextAttributes = memeTxtAttributes
         txtBottom.defaultTextAttributes = memeTxtAttributes
-        txtTop.delegate = self
-        txtBottom.delegate = self
+        txtTop.textAlignment = .center
+        txtBottom.textAlignment = .center
         ImagePickerView.contentMode = UIViewContentMode.scaleAspectFit
         // Do any additional setup after loading the view, typically from a nib.
     }
