@@ -40,14 +40,6 @@ UINavigationControllerDelegate, UITextFieldDelegate {
     
     var meme: MemeImage!
     
-    
-    
-    
-    
-    
-    
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         socialBtn.isEnabled = false
@@ -136,11 +128,6 @@ UINavigationControllerDelegate, UITextFieldDelegate {
         topToolbar.isHidden = false
         
         return memedImage
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
 
     @IBAction func pickAnImage(_ sender: Any) {
