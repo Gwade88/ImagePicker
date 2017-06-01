@@ -43,14 +43,21 @@ UINavigationControllerDelegate, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         socialBtn.isEnabled = false
-        txtTop.text = "Top"
-        txtBottom.text = "Bottom"
-        txtTop.defaultTextAttributes = memeTxtAttributes
-        txtBottom.defaultTextAttributes = memeTxtAttributes
-        txtTop.textAlignment = .center
-        txtBottom.textAlignment = .center
+        initializeTextFields( textField: txtTop, initialText: "Top")
+        initializeTextFields( textField: txtBottom, initialText: "Bottom")
         ImagePickerView.contentMode = UIViewContentMode.scaleAspectFit
-        // Do any additional setup after loading the view, typically from a nib.
+    }
+    
+    func initializeTextFields ( textField: UITextField, initialText: String){
+        textField.defaultTextAttributes = memeTxtAttributes
+        textField.textAlignment = NSTextAlignment.center
+        textField.text = initialText
+        textField.delegate = self
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -184,11 +191,6 @@ UINavigationControllerDelegate, UITextFieldDelegate {
             textField.text = ""
         }}
     
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        print("YOOOO ITS HAPPENING")
-        textField.resignFirstResponder()
-        return true
-    }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
