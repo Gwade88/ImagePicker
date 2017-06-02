@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  MemeMain.swift
 //  ImagePicker
 //
 //  Created by Kim Wayne on 5/30/17.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController, UIImagePickerControllerDelegate,
+class MemeMain: UIViewController, UIImagePickerControllerDelegate,
 UINavigationControllerDelegate, UITextFieldDelegate {
     
     @IBOutlet weak var topToolbar: UIToolbar!
@@ -22,6 +22,8 @@ UINavigationControllerDelegate, UITextFieldDelegate {
     @IBOutlet weak var pickBtn: UIBarButtonItem!
     @IBOutlet weak var cameraButton: UIBarButtonItem!
     
+    
+    
     let memeTxtAttributes:[String:Any] =
         [
             NSStrokeColorAttributeName: UIColor.black,
@@ -30,15 +32,6 @@ UINavigationControllerDelegate, UITextFieldDelegate {
             NSStrokeWidthAttributeName: NSNumber( value: -4.0 )
     ]
     
-    struct MemeImage
-    {
-        var topText: String
-        var bottomText: String
-        var origImage: UIImage
-        var memedImage: UIImage
-    }
-    
-    var meme: MemeImage!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -70,7 +63,7 @@ UINavigationControllerDelegate, UITextFieldDelegate {
         
         super.viewWillAppear( animated )
         subscribeToKeyboardNotifications()
-    }
+        }
     
     override func viewWillDisappear(_ animated: Bool)
     {
@@ -117,7 +110,11 @@ UINavigationControllerDelegate, UITextFieldDelegate {
     
     func save(_ memedImage: UIImage) {
         // Create the meme
-        self.meme = MemeImage.init(topText: self.txtTop.text!, bottomText: self.txtBottom.text!, origImage: self.ImagePickerView.image!, memedImage: memedImage)
+        let meme = MemeImage(topText: txtTop.text!, bottomText: txtBottom.text!, origImage: ImagePickerView.image!, memedImage: generateMemedImage())
+        
+        let object = UIApplication.shared.delegate
+        let appDelegate = object as! AppDelegate
+        appDelegate.memes.append(meme)
     }
     
     func generateMemedImage() -> UIImage {
@@ -182,7 +179,6 @@ UINavigationControllerDelegate, UITextFieldDelegate {
         txtTop.text = "Top"
         txtBottom.text = "Bottom"
         ImagePickerView.image = nil
-        meme = nil
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
@@ -194,7 +190,6 @@ UINavigationControllerDelegate, UITextFieldDelegate {
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
-            print ("This is happening")
             ImagePickerView.contentMode = .scaleAspectFit
             ImagePickerView.image = image
             socialBtn.isEnabled = true
@@ -204,7 +199,6 @@ UINavigationControllerDelegate, UITextFieldDelegate {
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        print ("This is happeening fo real")
         dismiss( animated: true, completion: nil)
     }
 }
